@@ -313,7 +313,8 @@ module Wice
         name:                        '',
         negation:                    ConfigurationProvider.value_for(:NEGATION_IN_STRING_FILTERS),
         ordering:                    true,
-        table_alias:                 nil
+        table_alias:                 nil,
+        default_filter:              nil
       }
 
       opts.assert_valid_keys(options.keys)

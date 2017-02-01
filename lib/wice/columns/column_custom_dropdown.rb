@@ -56,7 +56,8 @@ module Wice
           select_options[:class] += ' auto-reload'
         end
 
-        params_for_select = (params.is_a?(Hash) && params.empty?) ? [nil] : params
+        default_params = (default_filter.blank?) ? [nil] : [default_filter]
+        params_for_select = (params.is_a?(Hash) && params.empty?) ? default_params : params
 
         '<div class="custom-dropdown-container">'.html_safe +
           content_tag(:select,
