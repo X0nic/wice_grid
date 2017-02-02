@@ -16,7 +16,8 @@ module Wice
         @custom_filter = @custom_filter.call if @custom_filter.is_a? Proc
 
         if @custom_filter.is_a? Array
-          @custom_filter = [[@filter_all_label, nil]] + @custom_filter.map do|label, value|
+          blank_value = default_filter.blank? ? nil : Wice::Defaults::CUSTOM_FILTER_ALL_LABEL
+          @custom_filter = [[@filter_all_label, blank_value]] + @custom_filter.map do|label, value|
             [label.to_s, value.to_s]
           end
         end
@@ -79,7 +80,7 @@ module Wice
 
     class ConditionsGeneratorColumnCustomDropdown < ConditionsGeneratorColumn #:nodoc:
       def generate_conditions(table_alias, opts)   #:nodoc:
-        if opts.empty? || (opts.is_a?(Array) && opts.size == 1 && opts[0].blank?)
+        if opts.empty? || (opts.is_a?(Array) && opts.size == 1 && (opts[0].blank? || opts[0] == Wice::Defaults::CUSTOM_FILTER_ALL_LABEL) )
           return false
         end
         opts = (opts.is_a?(Array) && opts.size == 1) ? opts[0] : opts
